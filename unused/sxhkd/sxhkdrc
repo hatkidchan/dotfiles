@@ -1,0 +1,13 @@
+super + r
+	rofi -show run -modi run,drun,ssh,window -sidebar-mode -lines 10
+
+super + e
+	rofi -show drun -modi run,drun,ssh,window -sidebar-mode -lines 10
+
+super + s
+	rofi -show ssh -modi run,drun,ssh,window -sidebar-mode -lines 10
+
+super + w
+	rofi -show window -modi run,drun,ssh,window -sidebar-mode -lines 10
+
+

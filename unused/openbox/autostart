@@ -1,0 +1,32 @@
+BG_FOLDER=/home/user/images/wallpapers/random
+
+lxpolkit & bg                     # LXDE Policy toolkit
+# BG_IMAGE=$(ls $BG_FOLDER --color=never |sort -R | head -n 1)
+# (cd $BG_FOLDER; hsetroot -cover "$BG_IMAGE") & bg    # Setting wallpaper
+BG_IMAGE=/home/user/images/wallpapers/wall.jpg
+hsetroot -cover "$BG_IMAGE";
+# hsetroot -fill "#131313";
+
+cbpp-compositor --start & bg      # opacity compositor
+tint2 & bg                        # bottom(?) bar
+polybar main & bg                 # top bar
+sxhkd & bg                        # hotkey daemon
+
+dunst & bg;			  # Notification manager
+nm-applet & bg                    # Network-manager
+mate-volume-control-applet & bg   # Volume controller
+xfce4-power-manager & bg          # Power manager
+(sleep 3s && clipit) & bg         # Clipboard manager
+# gxkb & bg                       # Keyboard layout applet
+
+xset r rate 250 25 & bg           # Change rate of keyboard (250ms delay & 25cps)
+# conky -q & bg                     # Start Conky
+
+synclient HorizEdgeScroll=1\      # Enable edge scrolling
+		  VertEdgeScroll=1\       #
+          HorizTwoFingerScroll=1\ # Enable two-finger scrolls
+          VertTwoFingerScroll=1\  #
+	  	  TapButton1=1;           # Enable single-tap LMB emulation
+
+yeahconsole & bg;			      # quake-like console
+
