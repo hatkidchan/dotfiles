@@ -1,0 +1,42 @@
+!
+! My default URxvt theme
+!
+
+! special
+*.foreground:   #dce4e2
+*.background:   #000000
+*.cursorColor:  #dce4e2
+
+! black
+*.color0:       #555555
+*.color8:       #777777
+
+! red
+*.color1:       #ED6882
+*.color9:       #FF1A45
+
+! green
+*.color2:       #85ED68
+*.color10:      #4CFF1A
+
+! yellow
+*.color3:       #EDD568
+*.color11:      #FFD41A
+
+! blue
+*.color4:       #688CED
+*.color12:      #1A57FF
+
+! magenta
+*.color5:       #BE68ED
+*.color13:      #AD1AFF
+
+! cyan
+*.color6:       #68EDD5
+*.color14:      #1AFFD6
+
+! white
+*.color7:       #aaaaaa
+*.color15:      #ffffff
+
+

@@ -1,0 +1,4 @@
+#!/bin/bash
+export TG_API_ID="123456";
+export TG_API_HASH="577466207520646f696e672068657265";
+export NULL="/dev/null";

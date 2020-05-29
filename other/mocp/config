@@ -1,0 +1,164 @@
+#ReadTags = yes
+MusicDir = /srv/music
+StartInMusicDir = yes
+#CircularLogSize = 0
+Sort = FileName
+#ShowStreamErrors = no
+MP3IgnoreCRCErrors = yes
+Repeat = no
+Shuffle = yes
+AutoNext = yes
+FormatString = "%(n:%n :)%(a:%a - :)%(t:%t:)%(A: \(%A\):)"
+InputBuffer = 512                  # Minimum value is 32KB
+OutputBuffer = 512                 # Minimum value is 128KB
+Prebuffering = 64
+#HTTPProxy =
+SoundDriver = ALSA:OSS
+# JackClientName = "moc"
+# JackStartServer = yes
+# JackOutLeft = "system:playback_1"
+# JackOutRight = "system:playback_2"
+#OSSDevice = /dev/dsp
+#OSSMixerDevice = /dev/mixer
+#OSSMixerChannel1 = pcm             # 'pcm', 'master' or 'speaker'
+#OSSMixerChannel2 = master          # 'pcm', 'master' or 'speaker'
+ALSADevice = default
+ALSAMixer1 = PCM
+ALSAMixer2 = Master
+ALSAStutterDefeat = yes
+Softmixer_SaveState = yes
+Equalizer_SaveState = yes
+ShowHiddenFiles = no
+HideFileExtension = yes
+ShowFormat = no
+ShowTime = IfAvailable
+ShowTimePercent = yes
+#ScreenTerms = screen:screen-w:vt100
+#XTerms = xterm
+#XTerms += xterm-colour:xterm-color
+#XTerms += xterm-256colour:xterm-256color
+#XTerms += rxvt:rxvt-unicode
+#XTerms += rxvt-unicode-256colour:rxvt-unicode-256color
+#XTerms += eterm
+Theme = yellow_red_theme
+#XTermTheme =
+AutoLoadLyrics = no
+MOCDir = ~/.moc
+UseMMap = no
+UseMimeMagic = no
+ID3v1TagsEncoding = WINDOWS-1251
+#UseRCC = yes
+#UseRCCForFilesystem = yes
+EnforceTagsEncoding = yes
+#FileNamesIconv = no
+#NonUTFXterm = no
+Precache = yes
+SavePlaylist = yes
+SyncPlaylist = yes
+#Keymap =
+#ASCIILines = no
+Fastdir1 = "/srv/music"
+Fastdir2 = "/home/user/downloads"
+Fastdir3 = "/home/user/downloads/Telegram Desktop"
+Fastdir4 = "/var/www/html"
+#Fastdir5 = "/media/use"
+#Fastdir6 =
+#Fastdir7 =
+#Fastdir8 =
+#Fastdir9 =
+#Fastdir10 =
+SeekTime = 2
+SilentSeekTime = 5
+#PreferredDecoders  = aac(aac,ffmpeg):m4a(ffmpeg)
+#PreferredDecoders += mpc(musepack,*,ffmpeg):mpc8(musepack,*,ffmpeg)
+#PreferredDecoders += sid(sidplay2):mus(sidplay2)
+#PreferredDecoders += wav(sndfile,*,ffmpeg)
+#PreferredDecoders += wv(wavpack,*,ffmpeg)
+#PreferredDecoders += audio/aac(aac):audio/aacp(aac):audio/m4a(ffmpeg)
+#PreferredDecoders += audio/wav(sndfile,*)
+#PreferredDecoders += ogg(vorbis,*,ffmpeg):oga(vorbis,*,ffmpeg):ogv(ffmpeg)
+#PreferredDecoders += application/ogg(vorbis):audio/ogg(vorbis)
+#PreferredDecoders += flac(flac,*,ffmpeg)
+#PreferredDecoders += opus(opus,ffmpeg)
+#PreferredDecoders += spx(speex)
+#ResampleMethod = Linear
+#ForceSampleRate = 0
+#Allow24bitOutput = no
+#UseRealtimePriority = no
+#TagsCacheSize = 256
+PlaylistNumbering = yes
+#Layout1 = directory(0,0,50%,100%):playlist(50%,0,FILL,100%)
+#Layout2 = directory(0,0,100%,100%):playlist(0,0,100%,100%)
+#Layout3 = ""
+FollowPlayedFile = yes
+CanStartInPlaylist = yes
+#     %f - file path
+#     %i - title made from tags
+#     %S - start block mark (in seconds)
+#     %E - end block mark (in seconds)
+#     %t - title
+#     %a - album
+#     %r - artist
+#     %n - track
+#     %m - time of the file (in seconds)
+ExecCommand1 = "notify-send %f"
+ExecCommand2 = "cp %f /var/www/html"
+ExecCommand3 = "mv %f /srv/music"
+#ExecCommand4 =
+#ExecCommand5 =
+#ExecCommand6 =
+#ExecCommand7 =
+#ExecCommand8 =
+#ExecCommand9 =
+#ExecCommand10 =
+#UseCursorSelection = no
+#SetXtermTitle = yes
+#SetScreenTitle = yes
+PlaylistFullPaths = no
+#BlockDecorators = "`\"'"
+#MessageLingerTime = 3
+#PrefixQueuedMessages = yes
+#ErrorMessagesQueued = "!"
+ModPlug_Oversampling = yes
+ModPlug_NoiseReduction = yes
+ModPlug_Reverb = no
+ModPlug_MegaBass = no
+ModPlug_Surround = no
+ModPlug_ResamplingMode = LINEAR
+ModPlug_Channels = 2               # 1 or 2 channels
+ModPlug_Bits = 16                  # 8, 16 or 32 bits
+ModPlug_Frequency = 44100          # 11025, 22050, 44100 or 48000 Hz
+ModPlug_ReverbDepth = 0            # 0 (quiet) to 100 (loud)
+ModPlug_ReverbDelay = 0            # Delay in ms (usually 40-200ms)
+ModPlug_BassAmount = 0             # 0 (quiet) to 100 (loud).
+ModPlug_BassRange = 10             # Cutoff in Hz (10-100).
+ModPlug_SurroundDepth = 0          # Surround level 0(quiet)-100(heavy).
+ModPlug_SurroundDelay = 0          # Surround delay in ms, usually 5-40ms.
+ModPlug_LoopCount = 0              # 0 (never), n (times) or -1 (forever)
+TiMidity_Rate = 44100              # Between 8000 and 48000
+TiMidity_Bits = 16                 # 8 or 16
+TiMidity_Channels = 2              # 1 or 2
+TiMidity_Volume = 100              # 0 to 800
+#TiMidity_Config =
+#SidPlay2_DefaultSongLength = 180   # If not in database (in seconds)
+#SidPlay2_MinimumSongLength = 0     # Play at least n (in seconds)
+#SidPlay2_Frequency = 44100         # 4000 to 48000
+#SidPlay2_Bits = 16                 # 8 or 16
+#SidPlay2_Optimisation = 0          # 0 (worst quality) to 2 (best quality)
+#SidPlay2_Database =
+#SidPlay2_PlayMode = "M"
+#SidPlay2_StartAtStart = yes
+#SidPlay2_PlaySubTunes = yes
+#     %a artist
+#     %r album
+#     %f filename
+#     %t title
+#     %n track
+#     %d file duration in XX:YY form
+#     %D file duration, number of seconds
+# OnSongChange = ""
+#RepeatSongChange = no
+#OnStop =
+#OnServerStart =
+#OnServerStop =
+#QueueNextSongReturn = yes

@@ -1,0 +1,58 @@
+#!/bin/bash
+mypk() { # Well...
+    cat "${SSH_KEY_PATH}.pub";
+}
+
+mkcd() { # used sometimes
+    mkdir $1;
+    cd $1;
+}
+
+uploadfile() {
+    curl --upload-file "$1" "https://transfer.sh/$1"; echo;
+}
+
+wttr() { # Very useful
+    local url="https://wttr.in/${1:-California}";
+    [ "$(tput cols)" -lt 125 ] && request+='?n';
+    curl -H "Accept-Language: ${LANG%_*}" --compressed "$url";
+}
+
+termbin() { # Like pastebin but termbin
+    nc termbin.com 9999; echo;
+}
+
+myip() { # I should change it to wtfismyip.com
+    curl eth0.me;
+}
+
+mapscii() { # Dead?
+    telnet mapscii.me;
+}
+
+speedtest() { # Very secure, ik.
+    curl -s https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python -;
+}
+
+qr() { # echo "https://youtu.be/dQw4w9WgXcQ" | jq
+    if [[ -z "$1" ]]; then
+        msg=$(</dev/stdin);
+    else
+        msg="$1";
+    fi;
+    echo "$msg" | curl -F-=\<- qrenco.de;
+}
+
+_dollar() { # Thanks "awesome" sites, which put commands "$ echo 'like that'"
+	echo -e "\e[34m$(pwd)\e[35m> \e[95m$*\e[0m";
+	$*;
+}
+alias "$"="_dollar";
+
+say() { # say something | play -- magic -q -
+    wget "http://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&q=$*&tl=ru" --header='User-Agent: Mozilla/5.0 (X11; Linux i686; rv:60.0) Gecko/20100101 Firefox/60.0' -O - -q ;
+}
+
+colonbang() { # :! something
+	$* 2>/dev/null >/dev/null & disown;
+}

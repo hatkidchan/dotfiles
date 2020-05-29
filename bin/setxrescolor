@@ -1,0 +1,15 @@
+#!/bin/bash
+old_line=$(grep -oP '#include ".config/xresources-colors/([^"]+)"' $HOME/.Xresources);
+old_theme=$(echo $old_line | grep -oP '[\w\-_\.]+' | tail -n 1)
+echo "current: $old_theme";
+if [[ "$1" == "" ]]; then
+	ls "$HOME/.config/xresources-colors";
+	exit;
+fi;
+[ -f "$HOME/.config/xresources-colors/$1" ] || exit;
+new_theme="$1";
+echo "new: $new_theme"
+cp $HOME/.Xresources $HOME/.Xresources-backup
+sed -i.bak "s/$old_theme/$new_theme/g" $HOME/.Xresources;
+xrdb $HOME/.Xresources;
+killall -USR1 xst; # reload all opened terminals

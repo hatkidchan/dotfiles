@@ -1,0 +1,230 @@
+# i3 config file (v4)
+# 
+# Colors based on http://dotshare.it/dots/8270/
+# Other stuff by me or default
+#
+font Fira Code
+
+# Lmao
+set $mod Mod4
+
+set $left h
+set $down j
+set $up k
+set $right l
+
+floating_modifier Mod4
+
+# Basics
+bindsym $mod+Return exec xst
+bindsym $mod+F4 kill
+bindsym $mod+d exec --no-startup-id rofi -show drun
+
+# Focusing
+bindsym $mod+$left focus left
+bindsym $mod+$down focus down
+bindsym $mod+$up focus up
+bindsym $mod+$right focus right
+focus_follows_mouse no
+
+# Moving focused
+bindsym $mod+Mod1+$left move left
+bindsym $mod+Mod1+$down move down
+bindsym $mod+Mod1+$up move up
+bindsym $mod+Mod1+$right move right
+
+# Splitting
+bindsym $mod+g split h
+bindsym $mod+v split v
+
+# Fullscreen
+bindsym $mod+f fullscreen toggle
+
+# Layout
+bindsym $mod+t border normal
+bindsym $mod+y border pixel
+
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+bindsym $mod+Shift+space floating toggle
+bindsym $mod+space focus mode_toggle
+bindsym $mod+a focus parent
+bindsym $mod+q focus child
+bindsym $mod+Shift+minus move scratchpad
+bindsym $mod+minus scratchpad show
+
+# Workspaces
+# set $workspace1 "1:Linux"
+# set $workspace2 "2:Editor"
+set $workspace3 "3"
+# set $workspace4 "4"
+# set $workspace5 "5:VideoRec"
+# set $workspace6 "6:Music"
+# set $workspace7 "7:Games"
+# set $workspace8 "8:FileManager"
+# set $workspace9 "9:Social"
+set $workspace10 "10"
+
+# switch to workspace
+bindsym $mod+1 workspace 1
+bindsym $mod+2 workspace 2
+bindsym $mod+3 workspace $workspace3
+bindsym $mod+4 workspace 4
+bindsym $mod+5 workspace 5
+bindsym $mod+6 workspace 6
+bindsym $mod+7 workspace 7
+bindsym $mod+8 workspace 8
+bindsym $mod+9 workspace 9
+bindsym $mod+0 workspace $workspace10
+bindsym $mod+Tab workspace next
+
+bindsym $mod+Shift+1 move container to workspace 1
+bindsym $mod+Shift+2 move container to workspace 2
+bindsym $mod+Shift+3 move container to workspace 3
+bindsym $mod+Shift+4 move container to workspace 4
+bindsym $mod+Shift+5 move container to workspace 5
+bindsym $mod+Shift+6 move container to workspace 6
+bindsym $mod+Shift+7 move container to workspace 7
+bindsym $mod+Shift+8 move container to workspace 8
+bindsym $mod+Shift+9 move container to workspace 9
+bindsym $mod+Shift+0 move container to workspace 10
+
+# Resizing
+mode "resize" {
+        # These bindings trigger as soon as you enter the resize mode
+
+        # Pressing left will shrink the window’s width.
+        # Pressing right will grow the window’s width.
+        # Pressing up will shrink the window’s height.
+        # Pressing down will grow the window’s height.
+        bindsym $down resize shrink height 10 px or 10 ppt
+        bindsym $up resize grow height 10 px or 10 ppt
+        bindsym $left resize shrink width 05 px or 05 ppt
+        bindsym $right resize grow width 05 px or 05 ppt
+
+        # same bindings, but for the arrow keys
+        bindsym Left resize shrink width 10 px or 10 ppt
+        bindsym Down resize grow height 10 px or 10 ppt
+        bindsym Up resize shrink height 10 px or 10 ppt
+        bindsym Right resize grow width 10 px or 10 ppt
+
+        # Same but with small step
+        bindsym Shift+$down resize shrink height 1 px or 1 ppt
+        bindsym Shift+$up resize grow height 1 px or 1 ppt
+        bindsym Shift+$left resize shrink width 1 px or 1 ppt
+        bindsym $right resize grow width 1 px or 1 ppt
+
+        bindsym Shift+Left resize shrink width 1 px or 1 ppt
+        bindsym Shift+Down resize grow height 1 px or 1 ppt
+        bindsym Shift+Up resize shrink height 1 px or 1 ppt
+        bindsym Shift+Right resize grow width 1 px or 1 ppt
+
+
+        # back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+bindsym $mod+r mode "resize"
+
+# Exiting
+set $mode_system System: --L  --E  --S  --H  --R  --P 
+mode "$mode_system" {
+	bindsym l exec --no-startup-id $Locker, mode "default"
+	bindsym e exec --no-startup-id i3-msg exit, mode "default"
+	bindsym s exec --no-startup-id $Locker && systemctl suspend, mode "default"
+	bindsym h exec --no-startup-id $Locker && systemctl hibernate, mode "default"
+	bindsym r exec --no-startup-id systemctl reboot, mode "default"
+	bindsym p exec --no-startup-id systemctl poweroff -i, mode "default"
+
+	#back to normal: Enter or Escape
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+}
+bindsym $mod+Delete mode "$mode_system"
+
+# Colors
+set $bg-color #2F343F
+set $inactive-bg-color #2F343F
+set $text-color #F3F4F5
+set $inactive-text-color #676E7D
+set $urgent-bg-color #E53935
+set $bg-color2 #262626
+set $inactive-bg-color2 #262626
+set $text-color2 #D5C4A1
+set $inactive-text-color2 #4E4E4E
+set $urgent-bg-color2 	#E53935
+# set $bg-color3 #A800FF
+set $bg-color3 #005252
+set $border #F3F4F5
+set $nav_color #524A42
+set $ind_color #7D715C
+
+# Class                      border  backgr   text  indicator child_border
+client.focused		$bg-color2 $bg-color2 $text-color2 $ind_color
+client.unfocused	$nav_color $nav_color $inactive-bg-color2 $ind_color
+client.focused_inactive	$nav_color $nav_color $inactive-bg-color2 $ind_color
+client.urgent	 $urgent-bg-color2 $urgent-bg-color2 $text-color2 $ind_color
+client.background           #111111
+
+#Gaps
+set $gaps_default_inner 25
+set $gaps_default_outer 15
+
+gaps inner $gaps_default_inner
+gaps outer $gaps_default_outer
+
+bindsym $mod+Shift+i gaps inner current toggle $gaps_default_inner
+bindsym $mod+Shift+o gaps outer current toggle $gaps_default_outer
+
+# Windows settings
+for_window [class="Chromium"] border pixel 0
+for_window [class="Eog"] floating enable
+for_window [class="mpv"] floating enable
+for_window [class="qpaeq"] floating enable
+for_window [class="Nitrogen"] floating enable
+
+# Media
+set $truemute sset Master mute
+set $mute amixer sset Master toggle
+set $vol_inc amixer sset Master 2%+
+set $vol_dec amixer sset Master 2%-
+set $music_player xst -e ncmpc
+set $music_stop mpc stop
+set $music_pause mpc toggle
+set $music_next mpc next
+set $music_prev mpc prev
+set $music_fwd mpc seek +10
+set $music_rev mpc seek -10
+set $music_vinc mpc volume +2
+set $music_vdec mpc volume -2
+set $music_mute mpc toggleoutput 2
+
+bindsym Control+XF86AudioMute exec --no-startup-id $music_mute
+bindsym XF86AudioMute exec --no-startup-id $mute
+bindsym XF86AudioRaiseVolume exec --no-startup-id $vol_inc
+bindsym XF86AudioLowerVolume exec --no-startup-id $vol_dec
+
+bindsym Control+XF86AudioRaiseVolume exec --no-startup-id $music_vinc
+bindsym Control+XF86AudioLowerVolume exec --no-startup-id $music_vdec
+bindsym XF86AudioNext exec --no-startup-id $music_next
+bindsym XF86AudioPrev exec --no-startup-id $music_prev
+bindsym Control+XF86AudioNext exec --no-startup-id $music_fwd
+bindsym Control+XF86AudioPrev exec --no-startup-id $music_rev
+bindsym XF86AudioStop exec --no-startup-id $music_stop
+bindsym XF86AudioPlay exec --no-startup-id $music_pause
+bindsym $mod+m exec --no-startup-id $music_player
+
+# Screenshot
+bindsym Mod4+Print exec ~/.local/bin/scr
+bindsym Shift+Print exec ~/.local/bin/scr -s
+bindsym Mod1+Print exec ~/.local/bin/scr -u
+
+# Autostart
+exec_always --no-startup-id ~/.config/i3/autostart.sh
+
+# Other stuff
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+bindsym $mod+Shift+c reload
+bindsym $mod+F1 exec --no-startup-id ~/.local/bin/toggletouchpad

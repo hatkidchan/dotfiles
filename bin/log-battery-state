@@ -1,0 +1,16 @@
+#!/bin/bash
+# Battery state logger
+# Crontab entry:
+# * * * * * /bin/bash /home/user/.local/bin/log-battery-state
+noeol() {
+	tr -d "\n\r";
+}
+tolc() {
+	sed -e 's/\(.*\)/\L\1/';
+}
+CAPACITY=$(( $(cat /sys/class/power_supply/BAT0/capacity) ));
+CAPACITY_LVL=$(cat /sys/class/power_supply/BAT0/capacity_level | tolc | noeol);
+STATUS=$(cat /sys/class/power_supply/BAT0/status | tolc | noeol);
+CPU=$(grep 'cpu ' /proc/stat | awk '{print ($2+$4)*100/($2+$4+$5)}' | noeol);
+NOW=$(date +%s | noeol);
+echo "$NOW:$CAPACITY:$CAPACITY_LVL:$STATUS:$CPU" >> $HOME/.local/battery.log

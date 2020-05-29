@@ -1,0 +1,3 @@
+#!/bin/bash
+current_state=$(synclient -l | grep TouchpadOff | awk '{print$3}');
+synclient TouchpadOff=$((1 - $current_state));

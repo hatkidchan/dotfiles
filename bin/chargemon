@@ -1,0 +1,162 @@
+#!/usr/bin/env python3
+# very unoptimized, but used very rarely
+# bcs im always on wall power
+from tkinter import Tk, Canvas
+import time
+
+BATTERY_LOG_PATH = '/home/user/.local/battery.log'
+
+
+def patch_widg(wg):
+    styles = {
+        'bg': '#131313', 'fg': '#78fafa',
+        'bd': 0, 'highlightthickness': 0,
+    }
+
+    class StyledWidget(wg):
+        def __init__(self, *pa, **kw):
+            super().__init__(*pa, **kw)
+            for k, v in styles.items():
+                try:
+                    self.config({k: v})
+                except:
+                    pass
+            self.config(**kw)
+
+        def config(self, *a, **kw):
+            super().config(*a, **kw)
+            return self
+    return StyledWidget
+
+
+Tk = patch_widg(Tk)
+Canvas = patch_widg(Canvas)
+
+
+def hslToRgb(h, s, l):
+    r, g, b = 0, 0, 0
+    if s == 0:
+        r, g, b = s, s, s
+    else:
+        def hue2rgb(p, q, t):
+            if t < 0:
+                t += 1
+            if t > 1:
+                t -= 1
+            if t < 1/6:
+                return p + (q - p) * 6 * t
+            if t < 1/2:
+                return q
+            if t < 2/3:
+                return p + (q - p) * (2 / 3 - t) * 6
+            return p
+
+        q = l * (1 + s) if l < 0.5 else l + s - l * s
+        p = 2 * l - q
+        r = hue2rgb(p, q, h + 1/3)
+        g = hue2rgb(p, q, h)
+        b = hue2rgb(p, q, h - 1/3)
+
+    return "#%.2x%.2x%.2x" % tuple(map(lambda v: int(v * 255), [r, g, b]))
+
+
+class ChargeMonWindow(Tk):
+    def __init__(self):
+        super().__init__()
+        self.config(width=500, height=500)
+        self.init_widgets()
+        self.bind("<KeyPress>", self.on_key_down)
+        self.bind("<Configure>", self.on_reconfigure)
+        self.after(10, self.post_init)
+
+    def post_init(self):
+        self._start_time = time.time() - self.get_delta_from_width()
+        self.plot(self._start_time)
+
+    def init_widgets(self):
+        self.canvas = Canvas(self).config(width=500, height=500, bg='#070707')
+        self.canvas.pack(fill="both")
+
+    def itercharge(self):
+        with open(BATTERY_LOG_PATH, 'r') as fd:
+            for i, line in enumerate(fd):
+                try:
+                    bts, lvl, lvl_n, stt, cpu = line.strip().split(":")
+                    bts, lvl, cpu = int(bts), int(lvl), float(cpu)
+                except Exception as e:
+                    print('Corrupted line %d' % i)
+                    print(line)
+                else:
+                    is_chg = "dis" not in stt
+                    yield bts, lvl, cpu, is_chg
+
+    def itercharge_from_to(self, start, end):
+        for bts, lvl, cpu, chg in self.itercharge():
+            if start <= bts <= end:
+                yield bts, lvl, cpu, chg
+
+    def plot(self, start_time):
+        end_time = start_time + self.get_delta_from_width()
+        old_c_s = None
+        for (t, v, c, s) in self.itercharge_from_to(start_time, end_time):
+            h = self.winfo_height()
+            x = int((t - start_time) / 60)
+            y = (h - 20) * (1 - v / 100)
+            c = c / 100
+            self.canvas.create_rectangle(x, y + 5, x + 1, h - 20,
+                                         fill="#262626",
+                                         width=0,
+                                         tags=("plot", "plt_filler"))
+
+            self.canvas.create_rectangle(x, y + 5, x + 1, y,
+                                         fill=hslToRgb(v / 200, 1, 0.5),
+                                         width=0,
+                                         tags=("plot", "plt_filler"))
+
+            self.canvas.create_rectangle(x, h - 18, x + 1, h - 14,
+                                         fill="#5fa" if s else "#fa5",
+                                         width=0,
+                                         tags=("plot", "plt_chg"))
+
+            self.canvas.create_rectangle(x, h - 14, x + 1, h - 10,
+                                         fill=hslToRgb(.25 - .25 * c, 1, .5),
+                                         width=0,
+                                         tags=("plot", "plt_cpu"))
+
+            if old_c_s != s and old_c_s is not None:
+                self.canvas.create_line(x, y + 5, x, h - 18,
+                                        fill="#131313",
+                                        tags=("plot", "line_chs"))
+            old_c_s = s
+
+    def get_delta_from_width(self):
+        return self.winfo_width() * 60
+
+    def on_reconfigure(self, event):
+        self.canvas.config(
+            width=self.winfo_width(),
+            height=self.winfo_height(),
+        )
+
+    def on_key_down(self, event):
+        # print(event.keysym)
+        btn = event.keysym
+        if btn == "Left":
+            self.canvas.delete("plot")
+            self._start_time -= 12000
+            self.plot(self._start_time)
+        if btn == "Right":
+            self.canvas.delete("plot")
+            self._start_time += 12000
+            if self._start_time > time.time() - self.get_delta_from_width():
+                self._start_time = time.time() - self.get_delta_from_width()
+            self.plot(self._start_time)
+        self.update()
+
+
+def main():
+    ChargeMonWindow().mainloop()
+
+
+if __name__ == '__main__':
+    main()
