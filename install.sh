@@ -11,7 +11,7 @@ echo -e "Type \e[34msomething else\e[33m to exit\e[0m";
 read -p "> " reply;
 
 if [[ "$reply" == "something else" ]]; then
-    echo "\e[34mMr. Logic lmao\e[0m";
+    echo -e "\e[34mMr. Logic lmao\e[0m";
     exit;
 else
     if [[ ! "$reply" == "Yes, install this shit!" ]]; then
