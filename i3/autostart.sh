@@ -3,8 +3,8 @@
 
 killall -q polybar;
 while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
-polybar main & disown;
-polybar tray & disown;
+MONITOR=LVDS1 polybar main & disown;
+MONITOR=LVDS1 polybar tray & disown;
 
 if xrandr | grep "VGA1 connected" >/dev/null 2>&1; then
 	xrandr --output LVDS1 --auto \
@@ -18,3 +18,4 @@ fi
 nitrogen --restore & disown;
 xset r rate 250 25;
 compton & disown;
+nm-applet & disown;

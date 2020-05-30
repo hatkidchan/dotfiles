@@ -43,7 +43,8 @@ cursor-scroll = ns-resize
 
 [bar/tray]
 inherit = bar/default
-modules-left = date
+modules-left = date workspace
+modules-right = volume
 tray-position = right
 tray-detached = false
 tray-padding = 3
@@ -56,7 +57,7 @@ bottom = true
 inherit = bar/default
 modules-left = memory cpu battery temperature wlan-usage eth-usage eth1-usage rootfs
 modules-center = 
-modules-right = wlan ether eth1-net volume
+modules-right = wlan ether eth1-net
 
 
 [module/date]
@@ -155,10 +156,10 @@ format-disconnected =
 
 [module/volume]
 type = internal/alsa
-format-volume = <ramp-volume> <bar-volume>
+format-volume = "[ <ramp-volume> <bar-volume> ]"
 label-volume = 
 label-volume-foreground = ${root.foreground}
-format-muted = <label-muted> <bar-volume>
+format-muted = "[ <label-muted> <bar-volume> ]"
 label-muted = ""
 label-muted-foreground = "#755"
 bar-volume-width = 10
@@ -224,6 +225,11 @@ ramp-1 = 
 ramp-2 = 
 ramp-3 = 
 ramp-4 = 
+
+
+[module/workspace]
+type = internal/i3
+label-focused-foreground = ${colors.primary}
 
 
 [settings]

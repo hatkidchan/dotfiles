@@ -3,19 +3,23 @@ self="$(realpath "$(dirname $0)")";
 config="${XDG_CONFIG_HOME:-$HOME/.config}";
 share="${XDG_SHARED:-$HOME/.local/share}"
 
-echo -e "\e[33mThis script will install a \e[31mLOT\e[33m of files.";
-echo -e "Some of them may \e[31mbreak your environment\e[33m.";
-echo -e "Do you \e[32mreally\e[33m want to install this dots?";
-echo -e "Type \e[34m\"Yes, install this shit!\"\e[33m to install;";
-echo -e "Type \e[34msomething else\e[33m to exit\e[0m";
-read -p "> " reply;
-
-if [[ "$reply" == "something else" ]]; then
-    echo -e "\e[34mMr. Logic lmao\e[0m";
-    exit;
+if [[ "$1" == "-f" ]]; then
+    echo -e "\e[31m[*] Force installation\e[0m";
 else
-    if [[ ! "$reply" == "Yes, install this shit!" ]]; then
+    echo -e "\e[33mThis script will install a \e[31mLOT\e[33m of files.";
+    echo -e "Some of them may \e[31mbreak your environment\e[33m.";
+    echo -e "Do you \e[32mreally\e[33m want to install this dots?";
+    echo -e "Type \e[34m\"Yes, install this shit!\"\e[33m to install;";
+    echo -e "Type \e[34msomething else\e[33m to exit\e[0m";
+    read -p "> " reply;
+
+    if [[ "$reply" == "something else" ]]; then
+        echo -e "\e[34mMr. Logic lmao\e[0m";
         exit;
+    else
+        if [[ ! "$reply" == "Yes, install this shit!" ]]; then
+            exit;
+        fi;
     fi;
 fi;
 
@@ -24,7 +28,6 @@ echo -e "\e[32m[*] Creating folders...\e[0m";
 [ -d "$HOME/.local/bin" ] || mkdir -p "$HOME/.local/bin";
 [ -d "$share" ] || mkdir -p "$share";
 echo -e "\e[32m[*] Installing dotfiles...\e[0m";
-set -x
 cp -r "$self/bin/." "$HOME/.local/bin/.";
 
 [ -d "$config/i3" ] || mkdir -p "$config/i3";
@@ -38,6 +41,12 @@ cp -r "$self/other/ncmpc/." "$config/ncmpc";
 
 [ -d "$config/polybar" ] || mkdir -p "$config/polybar";
 cp -r "$self/polybar/." "$config/polybar/.";
+
+[ -d "$config/dunst" ] || mkdir -p "$config/dunst";
+cp -r "$self/dunst/." "$config/dunst/.";
+
+[ -d "$config/rofi" ] || mkdir -p "$config/rofi";
+cp -r "$self/rofi/." "$config/rofi/.";
 
 [ -d "$config/nvim" ] || mkdir -p "$config/nvim";
 cp -r "$self/editor/nvim/." "$config/nvim/.";
@@ -53,8 +62,7 @@ cp -r "$self/xresources/xresources-colors/." "$config/xresources-colors/.";
 [ -f "$HOME/.zshrc" ] && cp "$HOME/.zshrc" "$HOME/.zshrc.old";
 cp "$self/zsh/dot.zshrc" "$HOME/.zshrc";
 [ -d "$share/oh-my-zsh-custom" ] || mkdir -p "$share/oh-my-zsh-custom";
-cp -r "$self/zsh/oh-my-zsh-custom/." "$share/oh-my-zsh-custom/."
-set +x
+cp -ur "$self/zsh/oh-my-zsh-custom/." "$share/oh-my-zsh-custom/."
 
 echo -e "\e[31mMPD config change requires Superuser privileges, skipped."
 echo -e "You can just run following if you want:";
@@ -63,4 +71,6 @@ echo -e "\e[34m $ sudo cp $self/other/mpd/mpd.conf /etc/mpd.conf\e[0m";
 echo -e "\e[32m[*] Reloading X configuration...\e[0m";
 xrdb $HOME/.Xresources;
 echo -e "\e[32m[*] Refreshing XST windows...\e[0m"
-killall -USR1 xst;
+killall -USR1 xst; sleep 1;
+killall -9 dunst; dunst & disown;
+rofi -e "<span color='red'><b>Ur welcome lmao</b></span>" -markup

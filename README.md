@@ -11,3 +11,4 @@ I dunno, maybe name is the description ¯\\_(ツ)_/¯
 * `sxhkd` - i3 provides enough settings for me
 * `themes` - I'm not using openbox anymore
 
+[](scrot.png)
