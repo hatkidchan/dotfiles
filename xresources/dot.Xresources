@@ -54,5 +54,5 @@ st.bellvolume:        50
 st.bellcommand:       echo 'Peck'
 st.prompt_char:       $
 st.imstyle:           root
-st.opacity:      200
+st.opacity:      160
 

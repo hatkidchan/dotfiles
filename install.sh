@@ -1,7 +1,7 @@
 #!/bin/bash
 self="$(realpath "$(dirname $0)")";
 usage() {
-    echo -e "Usage: $0 [-hyr] [-c a] [-l a] [-p a] [-s a] [-n a] [-I a]
+    echo -e "Usage: $0 [-hyrN] [-c a] [-l a] [-p a] [-s a] [-n a] [-I a]
 Arguments:
     -h            show this help
     -y            force installation (no questions)

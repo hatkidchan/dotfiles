@@ -25,10 +25,10 @@ bindsym $mod+$left focus left
 bindsym $mod+$down focus down
 bindsym $mod+$up focus up
 bindsym $mod+$right focus right
-bindsym $mod+left focus left
-bindsym $mod+down focus down
-bindsym $mod+up focus up
-bindsym $mod+right focus right
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
 
 focus_follows_mouse no
 
@@ -38,10 +38,10 @@ bindsym $mod+Mod1+$left move left
 bindsym $mod+Mod1+$down move down
 bindsym $mod+Mod1+$up move up
 bindsym $mod+Mod1+$right move right
-bindsym $mod+Mod1+left move left
-bindsym $mod+Mod1+down move down
-bindsym $mod+Mod1+up move up
-bindsym $mod+Mod1+right move right
+bindsym $mod+Mod1+Left move left
+bindsym $mod+Mod1+Down move down
+bindsym $mod+Mod1+Up move up
+bindsym $mod+Mod1+Right move right
 
 
 # Splitting
