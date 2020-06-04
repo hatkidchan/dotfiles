@@ -19,22 +19,18 @@ wttr() { # Very useful
 }
 
 termbin() { # Like pastebin but termbin
-    nc termbin.com 9999; echo;
+    nc termbin.com 9999;
 }
 
 myip() { # I should change it to wtfismyip.com
     curl eth0.me;
 }
 
-mapscii() { # Dead?
-    telnet mapscii.me;
-}
-
-speedtest() { # Very secure, ik.
+function speedtest() { # Very secure, ik.
     curl -s https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python -;
 }
 
-qr() { # echo "https://youtu.be/dQw4w9WgXcQ" | jq
+function qr() { # echo "https://youtu.be/dQw4w9WgXcQ" | jq
     if [[ -z "$1" ]]; then
         msg=$(</dev/stdin);
     else
@@ -43,16 +39,25 @@ qr() { # echo "https://youtu.be/dQw4w9WgXcQ" | jq
     echo "$msg" | curl -F-=\<- qrenco.de;
 }
 
-_dollar() { # Thanks "awesome" sites, which put commands "$ echo 'like that'"
+function _dollar() { # Thanks "awesome" sites, which put commands "$ echo 'like that'"
 	echo -e "\e[34m$(pwd)\e[35m> \e[95m$*\e[0m";
-	$*;
+	$@;
 }
 alias "$"="_dollar";
 
-say() { # say something | play -- magic -q -
+function say() { # say something | play -- magic -q -
     wget "http://translate.google.com/translate_tts?ie=UTF-8&client=tw-ob&q=$*&tl=ru" --header='User-Agent: Mozilla/5.0 (X11; Linux i686; rv:60.0) Gecko/20100101 Firefox/60.0' -O - -q ;
 }
 
-colonbang() { # :! something
+function colonbang() { # :! something
 	$* 2>/dev/null >/dev/null & disown;
+}
+
+function tgbot_request() {
+    alias _tgcurl="curl -s";
+    if [[ "$TG_BOT_PROXY" ]]; then
+        alias _tgcurl="curl -s --proxy='$TG_BOT_PROXY'"
+    fi;
+    method=$1; shift;
+    _tgcurl "https://api.telegram.org/bot${TG_BOT_TOKEN}/$method" $@;
 }

@@ -1,4 +1,6 @@
 #!/bin/bash
 export TG_API_ID="123456";
 export TG_API_HASH="577466207520646f696e672068657265";
+export TG_BOT_PROXY="";
+export TG_BOT_TOKEN="1234567890:AAAZachemYaEtoDelayu";
 export NULL="/dev/null";

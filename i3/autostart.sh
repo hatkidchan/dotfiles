@@ -9,9 +9,9 @@ MONITOR=LVDS1 polybar tray & disown;
 if xrandr | grep "VGA1 connected" >/dev/null 2>&1; then
 	xrandr --output LVDS1 --auto \
 		--output VGA1 --right-of LVDS1 --auto;
-	killall -USR1 polybar;
 	MONITOR=VGA1 polybar main & disown;
 	MONITOR=VGA1 polybar tray & disown;
+    sleep 1; killall -USR1 polybar;
 fi
 
 # hsetroot -cover $BG_IMAGE;

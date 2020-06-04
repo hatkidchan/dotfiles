@@ -44,7 +44,7 @@ cursor-scroll = ns-resize
 [bar/tray]
 inherit = bar/default
 modules-left = date workspace
-modules-right = volume
+modules-right = kbd-layout brightness volume
 tray-position = right
 tray-detached = false
 tray-padding = 3
@@ -55,9 +55,9 @@ bottom = true
 
 [bar/main]
 inherit = bar/default
-modules-left = memory cpu battery temperature wlan-usage eth-usage eth1-usage rootfs
+modules-left = memory cpu battery temperature rootfs wlan-usage eth0-usage eth1-usage usb0-usage
 modules-center = 
-modules-right = wlan ether eth1-net
+modules-right = wlan-net eth0-net eth1-net usb0-net
 
 
 [module/date]
@@ -94,7 +94,7 @@ format-foreground = #fea
 label = %percentage_used%%
 
 
-[module/wlan]
+[module/wlan-net]
 type = internal/network
 interface = wlan0
 interval = 5
@@ -106,15 +106,15 @@ format-disconnected = "睊 "
 format-disconnected-foreground = #faaaaa
 
 
-[module/ether]
+[module/eth0-net]
 type = internal/network
 interface = eth0
 interval = 5
-format-connected = "[ <label-connected> ]"
+format-connected = "慎 <label-connected>]"
 format-connected-underline = #9f78e1
-label-connected = enp3s0 (%local_ip%)
+label-connected = (%local_ip%@eth0)
 format-connected-foreground = #aafaaa
-format-disconnected = " "
+format-disconnected = ""
 format-disconnected-foreground = #faaaaa
 
 
@@ -122,11 +122,23 @@ format-disconnected-foreground = #faaaaa
 type = internal/network
 interface = eth1
 interval = 5
-format-connected = "<label-connected>"
+format-connected = "慎 <label-connected>"
 format-connected-underline = #9f78e1
 label-connected = (%local_ip%@eth1)
 format-connected-foreground = #aafaaa
-format-disconnected = " "
+format-disconnected = ""
+format-disconnected-foreground = #faaaaa
+
+
+[module/usb0-net]
+type = internal/network
+interface = usb0
+interval = 5
+format-connected = "慎 <label-connected>"
+format-connected-underline = #9f78e1
+label-connected = (%local_ip%@usb0)
+format-connected-foreground = #aafaaa
+format-disconnected = ""
 format-disconnected-foreground = #faaaaa
 
 
@@ -138,7 +150,7 @@ label-connected = %{F#aff}%upspeed% %{F#ffa}%downspeed%
 format-disconnected = 
 
 
-[module/eth-usage]
+[module/eth0-usage]
 type = internal/network
 interface = eth0
 interval = 1
@@ -154,12 +166,20 @@ label-connected = %{F#aaa}[%{F#aff}%upspeed% %{F#ffa}%downspeed%%{F#aaa}]
 format-disconnected = 
 
 
+[module/usb0-usage]
+type = internal/network
+interface = usb0
+interval = 1
+label-connected = %{F#aaa}[%{F#aff}%upspeed% %{F#ffa}%downspeed%%{F#aaa}]
+format-disconnected = 
+
+
 [module/volume]
 type = internal/alsa
-format-volume = "[ <ramp-volume> <bar-volume> ]"
+format-volume = "[<ramp-volume> ][<bar-volume>]"
 label-volume = 
 label-volume-foreground = ${root.foreground}
-format-muted = "[ <label-muted> <bar-volume> ]"
+format-muted = "[<label-muted> ][<bar-volume>]"
 label-muted = ""
 label-muted-foreground = "#755"
 bar-volume-width = 10
@@ -190,6 +210,8 @@ format-charging = <animation-charging> <label-charging>
 format-charging-foreground = #aff
 format-discharging = <ramp-capacity> <label-discharging>
 format-discharging-foreground = #ffa
+format-full = "<label-full>"
+label-full = ""
 ramp-capacity-0 = 
 ramp-capacity-1 = 
 ramp-capacity-2 = 
@@ -230,6 +252,47 @@ ramp-4 = 
 [module/workspace]
 type = internal/i3
 label-focused-foreground = ${colors.primary}
+
+
+[module/kbd-layout]
+type = internal/xkeyboard
+blacklist-0 = num lock
+blacklist-1 = scroll lock
+format = [<label-layout>|<label-indicator>]
+label-layout = %layout%
+label-indicator-on-capslock = "%{F#2affb5}C%{F-}"
+label-indicator-off-capslock = "%{F#e60053}c%{F-}"
+label-indicator-on-numlock = "%{F#2affb5}N%{F-}"
+label-indicator-off-numlock = "%{F#e60053}n%{F-}"
+label-indicator-on-scrolllock = "%{F#2affb5}S%{F-}"
+label-indicator-off-scrolllock = "%{F#e60053}s%{F-}"
+
+
+[module/brightness]
+type = internal/xbacklight
+output = ${env:MONITOR:LVDS1}
+enable-scroll = true
+format = "[<ramp> ]"
+bar-width = 10
+bar-foreground-0 = #777777
+bar-foreground-1 = #aaaa77
+bar-foreground-2 = #ffaa55
+bar-foreground-3 = #ffff55
+bar-foreground-4 = #aaffff
+bar-gradient = false
+bar-indicator = |
+bar-fill = ─
+bar-empty = " "
+ramp-0 = "望"
+ramp-0-foreground = "#777777"
+ramp-1 = "滋"
+ramp-1-foreground = "#aaaa77"
+ramp-2 = "滛"
+ramp-2-foreground = "#ffaa55"
+ramp-3 = "盛"
+ramp-3-foreground = "#ffff55"
+ramp-4 = "盛"
+ramp-4-foreground = "#aaffff"
 
 
 [settings]
