@@ -224,7 +224,7 @@ if [[ "${install_entries[mpd]}" == "yes" ]]; then
     sudo cp -v "/etc/mpd.conf" "/etc/mpd.conf.old";
     sudo cp -v "$self/other/mpd/mpd.conf" "/etc/mpd.conf";
 else
-    if [[ "${install_entries[mpd]}" != "no" ]]; then
+    if [[ "${install_entries[mpd]}" == "no" ]]; then
         echo -e "\e[31m[!] MPD config change requires sudo, skipped."
         echo -e "[!] You can just run following if you want:";
         echo -e "[!] \e[34m# cp $self/other/mpd/mpd.conf /etc/mpd.conf\e[0m";
