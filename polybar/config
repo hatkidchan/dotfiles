@@ -176,12 +176,18 @@ format-disconnected =
 
 [module/volume]
 type = internal/alsa
-format-volume = "[<ramp-volume> ][<bar-volume>]"
-label-volume = 
+; OLD
+;format-volume = "[<ramp-volume> ][<bar-volume>]"
+;format-muted = "[ ][<bar-volume>]"
+
+format-volume = "[<ramp-volume> ][<label-volume>]"
+format-muted = "[ ][<label-muted>]"
+
+label-volume = "%percentage:3%%"
 label-volume-foreground = ${root.foreground}
-format-muted = "[<label-muted> ][<bar-volume>]"
-label-muted = ""
+label-muted = "%percentage:03%%"
 label-muted-foreground = "#755"
+
 bar-volume-width = 10
 bar-volume-foreground-0 = #5555aa
 bar-volume-foreground-1 = #55aa55
@@ -191,6 +197,7 @@ bar-volume-gradient = false
 bar-volume-indicator = |
 bar-volume-fill = ─
 bar-volume-empty = " "
+
 ramp-volume-0 = 奄
 ramp-volume-0-foreground = #5555aa
 ramp-volume-1 = 奔
@@ -206,11 +213,14 @@ type = internal/battery
 battery = BAT0
 adapter = AC
 full-at = 90
+
 format-charging = <animation-charging> <label-charging>
-format-charging-foreground = #aff
 format-discharging = <ramp-capacity> <label-discharging>
-format-discharging-foreground = #ffa
 format-full = "<label-full>"
+
+format-charging-foreground = #aff
+format-discharging-foreground = #ffa
+
 label-full = ""
 ramp-capacity-0 = 
 ramp-capacity-1 = 
@@ -222,6 +232,7 @@ ramp-capacity-6 = 
 ramp-capacity-7 = 
 ramp-capacity-8 = 
 ramp-capacity-9 = 
+
 animation-charging-0 = 
 animation-charging-1 = 
 animation-charging-2 = 
@@ -236,12 +247,16 @@ type = internal/temperature
 thermal-zone = 0
 base-temperature = 40
 warn-temperature = 60
+
 format = <ramp> <label>
-format-foreground = #ffa
 format-warn = <ramp> <label-warn>
+
+format-foreground = #ffa
 format-warn-foreground = #faa
+
 label = "%temperature-c%"
 label-warn = %temperature-c%
+
 ramp-0 = 
 ramp-1 = 
 ramp-2 = 
@@ -258,8 +273,10 @@ label-focused-foreground = ${colors.primary}
 type = internal/xkeyboard
 blacklist-0 = num lock
 blacklist-1 = scroll lock
+
 format = [<label-layout>|<label-indicator>]
 label-layout = %layout%
+
 label-indicator-on-capslock = "%{F#2affb5}C%{F-}"
 label-indicator-off-capslock = "%{F#e60053}c%{F-}"
 label-indicator-on-numlock = "%{F#2affb5}N%{F-}"
@@ -272,17 +289,21 @@ label-indicator-off-scrolllock = "%{F#e60053}s%{F-}"
 type = internal/xbacklight
 output = ${env:MONITOR:LVDS1}
 enable-scroll = true
+
 format = "[<ramp> ]"
+
 bar-width = 10
 bar-foreground-0 = #777777
 bar-foreground-1 = #aaaa77
 bar-foreground-2 = #ffaa55
 bar-foreground-3 = #ffff55
 bar-foreground-4 = #aaffff
+
 bar-gradient = false
 bar-indicator = |
 bar-fill = ─
 bar-empty = " "
+
 ramp-0 = "望"
 ramp-0-foreground = "#777777"
 ramp-1 = "滋"
@@ -298,8 +319,10 @@ ramp-4-foreground = "#aaffff"
 [module/btn-screenshot]
 type = custom/text
 content = "[S]"
+content-title = "AAAAa"
+
 click-left = "sleep 0.5; bash -e /home/user/.local/bin/scr -s"
-click-right = "play -q -n synth 0.1 square 2000"
+click-right = "flameshot gui"
 
 
 [settings]
