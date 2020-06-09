@@ -36,6 +36,7 @@ declare -A install_entries=(
     [nvim]=yes
     [xresources]=yes
     [zsh]=yes,
+    [tmux]=yes,
     [mpd]=no,
 );
 
@@ -212,14 +213,22 @@ if [[ "${install_entries[zsh]}" == "yes" ]]; then
 fi;
 
 
+if [[ "${install_entries[tmux]}" == "yes" ]]; then
+    echo -e "\e[32m[*] Installing tmux.conf\e[0m";
+    [ -f "$HOME/.tmux.conf" ] && cp "$HOME/.tmux.conf" "$HOME/.tmux.conf.bak";
+    cp "$self/other/tmux.conf" "$HOME/.tmux.conf";
+fi;
+
 if [[ "${install_entries[mpd]}" == "yes" ]]; then
     echo -e "\e[32m[*] Installing mpd config\e[0m";
     sudo cp -v "/etc/mpd.conf" "/etc/mpd.conf.old";
     sudo cp -v "$self/other/mpd/mpd.conf" "/etc/mpd.conf";
 else
-    echo -e "\e[31m[!] MPD config change requires Superuser privileges, skipped."
-    echo -e "[!] You can just run following if you want:";
-    echo -e "[!] \e[34m$ sudo cp $self/other/mpd/mpd.conf /etc/mpd.conf\e[0m";
+    if [[ "${install_entries[mpd]}" != "no" ]]; then
+        echo -e "\e[31m[!] MPD config change requires sudo, skipped."
+        echo -e "[!] You can just run following if you want:";
+        echo -e "[!] \e[34m# cp $self/other/mpd/mpd.conf /etc/mpd.conf\e[0m";
+    fi;
 fi;
 
 if [[ "$no_reload_config" == "" ]]; then

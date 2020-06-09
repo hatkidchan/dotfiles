@@ -44,7 +44,7 @@ cursor-scroll = ns-resize
 [bar/tray]
 inherit = bar/default
 modules-left = date workspace
-modules-right = kbd-layout brightness volume
+modules-right = btn-screenshot kbd-layout brightness volume
 tray-position = right
 tray-detached = false
 tray-padding = 3
@@ -293,6 +293,13 @@ ramp-3 = "盛"
 ramp-3-foreground = "#ffff55"
 ramp-4 = "盛"
 ramp-4-foreground = "#aaffff"
+
+
+[module/btn-screenshot]
+type = custom/text
+content = "[S]"
+click-left = "sleep 0.5; bash -e /home/user/.local/bin/scr -s"
+click-right = "play -q -n synth 0.1 square 2000"
 
 
 [settings]

@@ -34,6 +34,7 @@ rofi.separator-style:                none
 
 ! Meet the spy
 st.termname:     rxvt-unicode-256color
+!st.termname:     xterm-256color
 st.shell:        /usr/bin/zsh
 st.font:              Fira Code:pixelsize=12:antialias=true:autohint=true;
 st.borderpx:          1
@@ -54,5 +55,5 @@ st.bellvolume:        50
 st.bellcommand:       echo 'Peck'
 st.prompt_char:       $
 st.imstyle:           root
-st.opacity:      160
+st.opacity:      220
 

@@ -227,6 +227,7 @@ bindsym $mod+Shift+o gaps outer current toggle $gaps_default_outer
 # Windows settings
 for_window [class="Chromium"] border pixel 0
 for_window [class="Eog"] floating enable
+for_window [class="Tk"] floating enable
 for_window [class="mpv"] floating enable
 for_window [class="qpaeq"] floating enable
 for_window [class="Nitrogen"] floating enable
