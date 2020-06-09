@@ -55,9 +55,9 @@ bottom = true
 
 [bar/main]
 inherit = bar/default
-modules-left = memory cpu battery temperature rootfs wlan-usage eth0-usage eth1-usage usb0-usage
+modules-left = memory cpu battery temperature rootfs
 modules-center = 
-modules-right = wlan-net eth0-net eth1-net usb0-net
+modules-right = net-wlan0 net-eth0 net-eth1 net-usb0 net-all
 
 
 [module/date]
@@ -68,6 +68,23 @@ time = %H:%M:%S
 label = %date% %time%
 
 
+;==================================================
+; SYSTEM STATS (i.e RAM/CPU/HDD/TEMP/BATTERY)
+;==================================================
+[module/memory]
+type = internal/memory
+interval = 1
+format-prefix = " "
+format-foreground = #fea
+label = %percentage_used:3%%
+
+[module/cpu]
+type = internal/cpu
+interval = 1
+format-prefix = " "
+format-foreground = #eaf
+label = %percentage:3%%
+
 [module/rootfs]
 type = internal/fs
 interval = 30
@@ -75,152 +92,35 @@ mount-0 = /
 format-mounted-prefix = " "
 format-mounted-foreground = #afa
 format-mounted = <label-mounted>
-label-mounted = %percentage_used%%
+label-mounted = %percentage_used:3%%
 
-
-[module/cpu]
-type = internal/cpu
-interval = 1
-format-prefix = " "
-format-foreground = #eaf
-label = %percentage:2%%
-
-
-[module/memory]
-type = internal/memory
-interval = 1
-format-prefix = " "
-format-foreground = #fea
-label = %percentage_used%%
-
-
-[module/wlan-net]
-type = internal/network
-interface = wlan0
-interval = 5
-format-connected = "直 <label-connected>"
-format-connected-underline = #9f78e1
-label-connected = %essid% (%local_ip%)
-format-connected-foreground = #aafafa
-format-disconnected = "睊 "
-format-disconnected-foreground = #faaaaa
-
-
-[module/eth0-net]
-type = internal/network
-interface = eth0
-interval = 5
-format-connected = "慎 <label-connected>]"
-format-connected-underline = #9f78e1
-label-connected = (%local_ip%@eth0)
-format-connected-foreground = #aafaaa
-format-disconnected = ""
-format-disconnected-foreground = #faaaaa
-
-
-[module/eth1-net]
-type = internal/network
-interface = eth1
-interval = 5
-format-connected = "慎 <label-connected>"
-format-connected-underline = #9f78e1
-label-connected = (%local_ip%@eth1)
-format-connected-foreground = #aafaaa
-format-disconnected = ""
-format-disconnected-foreground = #faaaaa
-
-
-[module/usb0-net]
-type = internal/network
-interface = usb0
-interval = 5
-format-connected = "慎 <label-connected>"
-format-connected-underline = #9f78e1
-label-connected = (%local_ip%@usb0)
-format-connected-foreground = #aafaaa
-format-disconnected = ""
-format-disconnected-foreground = #faaaaa
-
-
-[module/wlan-usage]
-type = internal/network
-interface = wlan0
-interval = 1
-label-connected = %{F#aff}%upspeed% %{F#ffa}%downspeed%
-format-disconnected = 
-
-
-[module/eth0-usage]
-type = internal/network
-interface = eth0
-interval = 1
-label-connected = %{F#aaa}[%{F#aff}%upspeed% %{F#ffa}%downspeed%%{F#aaa}]
-format-disconnected = 
-
-
-[module/eth1-usage]
-type = internal/network
-interface = eth1
-interval = 1
-label-connected = %{F#aaa}[%{F#aff}%upspeed% %{F#ffa}%downspeed%%{F#aaa}]
-format-disconnected = 
-
-
-[module/usb0-usage]
-type = internal/network
-interface = usb0
-interval = 1
-label-connected = %{F#aaa}[%{F#aff}%upspeed% %{F#ffa}%downspeed%%{F#aaa}]
-format-disconnected = 
-
-
-[module/volume]
-type = internal/alsa
-; OLD
-;format-volume = "[<ramp-volume> ][<bar-volume>]"
-;format-muted = "[ ][<bar-volume>]"
-
-format-volume = "[<ramp-volume> ][<label-volume>]"
-format-muted = "[ ][<label-muted>]"
-
-label-volume = "%percentage:3%%"
-label-volume-foreground = ${root.foreground}
-label-muted = "%percentage:03%%"
-label-muted-foreground = "#755"
-
-bar-volume-width = 10
-bar-volume-foreground-0 = #5555aa
-bar-volume-foreground-1 = #55aa55
-bar-volume-foreground-2 = #f5a70a
-bar-volume-foreground-3 = #ff5555
-bar-volume-gradient = false
-bar-volume-indicator = |
-bar-volume-fill = ─
-bar-volume-empty = " "
-
-ramp-volume-0 = 奄
-ramp-volume-0-foreground = #5555aa
-ramp-volume-1 = 奔
-ramp-volume-1-foreground = #55aa55
-ramp-volume-2 = 奔
-ramp-volume-2-foreground = #f5a70a
-ramp-volume-3 = 墳
-ramp-volume-3-foreground = #ff5555
-
+[module/temperature]
+type = internal/temperature
+thermal-zone = 0
+base-temperature = 40
+warn-temperature = 60
+format = <ramp> <label>
+format-warn = <ramp> <label-warn>
+format-foreground = #ffa
+format-warn-foreground = #faa
+label = "%temperature-c:3%"
+label-warn = %temperature-c:3%
+ramp-0 = 
+ramp-1 = 
+ramp-2 = 
+ramp-3 = 
+ramp-4 = 
 
 [module/battery]
 type = internal/battery
 battery = BAT0
 adapter = AC
 full-at = 90
-
 format-charging = <animation-charging> <label-charging>
 format-discharging = <ramp-capacity> <label-discharging>
 format-full = "<label-full>"
-
 format-charging-foreground = #aff
 format-discharging-foreground = #ffa
-
 label-full = ""
 ramp-capacity-0 = 
 ramp-capacity-1 = 
@@ -232,7 +132,6 @@ ramp-capacity-6 = 
 ramp-capacity-7 = 
 ramp-capacity-8 = 
 ramp-capacity-9 = 
-
 animation-charging-0 = 
 animation-charging-1 = 
 animation-charging-2 = 
@@ -242,41 +141,83 @@ animation-charging-5 = 
 animation-charging-framerate = 400
 
 
-[module/temperature]
-type = internal/temperature
-thermal-zone = 0
-base-temperature = 40
-warn-temperature = 60
+;==================================================
+; NETWORK USAGE INFO
+;==================================================
+[module/net-base]
+type = internal/network
+interval = 1
+label-connected = "%{F#af78fa}%local_ip%%{F-}%%{F#7878fa}%ifname%%{F-}"
+format-connected = "[<label-connected>]"
+format-disconnected = 
 
-format = <ramp> <label>
-format-warn = <ramp> <label-warn>
+[module/net-all]
+type = custom/script
+exec = ~/.config/polybar/info-speed.sh
+tail = true
 
-format-foreground = #ffa
-format-warn-foreground = #faa
+[module/net-wlan0]
+inherit = module/net-base
+label-connected = "%essid%%{F-}|%{F#af78fa}%local_ip%%{F-}"
+format-connected = "[%{F#78fafa}直 <label-connected>]"
+interface = wlan0
 
-label = "%temperature-c%"
-label-warn = %temperature-c%
+[module/net-eth0]
+inherit = module/net-base
+interface = eth0
 
-ramp-0 = 
-ramp-1 = 
-ramp-2 = 
-ramp-3 = 
-ramp-4 = 
+[module/net-eth1]
+inherit = module/net-base
+interface = eth1
 
+[module/net-usb0]
+inherit = module/net-base
+interface = usb0
+unknown-as-up = true
+
+
+;==================================================
+; GENERIC SETTINGS (i.e volume/brightness/etc)
+;==================================================
+[module/volume]
+type = internal/alsa
+; OLD
+;format-volume = "[<ramp-volume> ][<bar-volume>]"
+;format-muted = "[ ][<bar-volume>]"
+format-volume = "[<ramp-volume> ][<label-volume>]"
+format-muted = "[ ][<label-muted>]"
+label-volume = "%percentage:3%%"
+label-volume-foreground = ${root.foreground}
+label-muted = "%percentage:03%%"
+label-muted-foreground = "#755"
+bar-volume-width = 10
+bar-volume-foreground-0 = #5555aa
+bar-volume-foreground-1 = #55aa55
+bar-volume-foreground-2 = #f5a70a
+bar-volume-foreground-3 = #ff5555
+bar-volume-gradient = false
+bar-volume-indicator = |
+bar-volume-fill = ─
+bar-volume-empty = " "
+ramp-volume-0 = 奄
+ramp-volume-0-foreground = #5555aa
+ramp-volume-1 = 奔
+ramp-volume-1-foreground = #55aa55
+ramp-volume-2 = 奔
+ramp-volume-2-foreground = #f5a70a
+ramp-volume-3 = 墳
+ramp-volume-3-foreground = #ff5555
 
 [module/workspace]
 type = internal/i3
 label-focused-foreground = ${colors.primary}
 
-
 [module/kbd-layout]
 type = internal/xkeyboard
 blacklist-0 = num lock
 blacklist-1 = scroll lock
-
 format = [<label-layout>|<label-indicator>]
 label-layout = %layout%
-
 label-indicator-on-capslock = "%{F#2affb5}C%{F-}"
 label-indicator-off-capslock = "%{F#e60053}c%{F-}"
 label-indicator-on-numlock = "%{F#2affb5}N%{F-}"
@@ -284,26 +225,11 @@ label-indicator-off-numlock = "%{F#e60053}n%{F-}"
 label-indicator-on-scrolllock = "%{F#2affb5}S%{F-}"
 label-indicator-off-scrolllock = "%{F#e60053}s%{F-}"
 
-
 [module/brightness]
 type = internal/xbacklight
 output = ${env:MONITOR:LVDS1}
 enable-scroll = true
-
 format = "[<ramp> ]"
-
-bar-width = 10
-bar-foreground-0 = #777777
-bar-foreground-1 = #aaaa77
-bar-foreground-2 = #ffaa55
-bar-foreground-3 = #ffff55
-bar-foreground-4 = #aaffff
-
-bar-gradient = false
-bar-indicator = |
-bar-fill = ─
-bar-empty = " "
-
 ramp-0 = "望"
 ramp-0-foreground = "#777777"
 ramp-1 = "滋"
@@ -319,8 +245,6 @@ ramp-4-foreground = "#aaffff"
 [module/btn-screenshot]
 type = custom/text
 content = "[S]"
-content-title = "AAAAa"
-
 click-left = "sleep 0.5; bash -e /home/user/.local/bin/scr -s"
 click-right = "flameshot gui"
 
