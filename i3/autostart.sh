@@ -19,3 +19,4 @@ nitrogen --restore & disown;
 xset r rate 250 25;
 compton & disown;
 nm-applet & disown;
+clipit & disown;

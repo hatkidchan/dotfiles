@@ -1,7 +1,7 @@
 #!/bin/bash
 
-INTERVAL=1
-SHOW_PING="yes";
+INTERVAL=2
+SHOW_PING="no";
 PING_HOST=1.1.1.1
 INTERFACES=(eth0 eth1 wlan0 usb0)
 
@@ -30,17 +30,18 @@ get_bytes() {
 
 humanize() {
     sizes=("-B" "KB" "MB" "GB");
-    count=$(echo $1 / 1 | bc);
+    count=$(echo "$1 / 1" | bc);
+    if [[ "$count" -eq 0 ]]; then echo "    0 KB"; return; fi
     i=$(echo $(calc "l($count) / l(1024)") / 1 | bc);
     if [[ "$i" -eq 0 ]]; then i=1; fi
     size="${sizes[$i]}";
-    scaled=$(printf "%4.0f" $(calc "$count / (1024 ^ $i)"));
+    scaled=$(printf "%5.1f" $(calc "$count / (1024 ^ $i)"));
     echo "$scaled ${size}";
 }
 
 ping_str="|%{F#faafaf}N/A ms%{F-}";
 [[ "$SHOW_PING" == "yes" ]] || ping_str="";
-echo "[%{F#78affa}WAIT KB/s%{F-}|%{F#fafaaf}FUCK KB/s%{F-}$ping_str]";
+echo "[%{F#78affa} WAIT KB/s%{F-}|%{F#fafaaf} FUCK KB/s%{F-}$ping_str]";
 read last_bytes_rx last_bytes_tx last_update_ts <<<"$(get_bytes)";
 while true; do
     if [[ "$SHOW_PING" == "yes" ]]; then

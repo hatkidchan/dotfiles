@@ -36,8 +36,8 @@ rofi.separator-style:                none
 st.termname:     rxvt-unicode-256color
 !st.termname:     xterm-256color
 st.shell:        /usr/bin/zsh
-st.font:              Fira Code:pixelsize=12:antialias=true:autohint=true;
-st.borderpx:          1
+st.font:              Fira Code Retina:pixelsize=12:antialias=true:autohint=true;
+st.borderpx:          0
 ! Available cursor values: 2 4 6 7 = █ _ | ☃ ( 1 3 5 are blinking versions)
 st.cursorshape:       3
 st.cursorthickness:   1
@@ -57,3 +57,12 @@ st.prompt_char:       $
 st.imstyle:           root
 st.opacity:      220
 
+
+! XTerm settings
+XTerm.vt100.bellIsUrgent:       true
+XTerm.vt100.metaSendsEscape:    true
+XTerm.vt100.selectToClipboard:  true
+XTerm.font.linedrawing:         true
+! XTerm.termName:                 xterm-256color
+XTerm.termName:                 rxvt-unicode-256color
+! XTerm.vt100.font: 10x20

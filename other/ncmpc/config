@@ -2,23 +2,23 @@ host = 127.0.0.1
 port = 6600
 
 color background = 234
-color title = white/235
-color title-bold = 190/235
-color line = 243/235
-color line-flags = 135
+color title = white/233
+color title-bold = red/233
+color line = red/233
+color line-flags = green
 
-color list = 111
-color list-bold = 135
-color browser-directory = 120
-color browser-playlist = 213
+color list = blue
+color list-bold = magenta
+color browser-directory = green
+color browser-playlist = magenta
 
-color progressbar = 228/235
-color progressbar-background = 95/235
-color status-state = /235
-color status-time = /235
-color status-song = 111/235
+color progressbar = blue/234
+color progressbar-background = red/234
+color status-state = /234
+color status-time = /234
+color status-song = green/234
 
-color alert = 197/235
+color alert = red/black
 
 scroll = yes
 scroll-sep = " ::: "

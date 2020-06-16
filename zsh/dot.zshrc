@@ -1,4 +1,4 @@
-export PATH="$HOME/bin:/usr/bin:$PATH:$HOME/.local/bin:/usr/local/bin:/bin/snap:/usr/local/go/bin";
+export PATH="$HOME/bin:/usr/bin:$PATH:$HOME/.local/bin:/usr/local/bin:/bin/snap:/usr/local/go/bin:$HOME/.cargo/bin";
 export ZSH="$HOME/.local/share/oh-my-zsh"
 ZSH_CUSTOM="${ZSH}-custom"
 if [ -z "$ZSH_THEME" ]; then ZSH_THEME="uv"; fi
@@ -27,3 +27,5 @@ export ARCHFLAGS="-arch i686"
 export SSH_KEY_PATH="$HOME/.ssh/id_rsa"
 export PYTHONPATH="/usr/share"
 
+[ -n "$XTERM_VERSION" ] && transset \
+    --id "$WINDOWID" --max 0.8 --min 0.8 >/dev/null;  # enable transparency
