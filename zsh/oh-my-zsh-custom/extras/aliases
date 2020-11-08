@@ -1,23 +1,24 @@
 #!/bin/bash
-alias zshrc="vi ~/.zshrc"
-alias ls="ls --color"
-alias ll="ls -alFh"
-alias l="ls -ah"
-alias la="ls -a"
-alias ды="ls"
-alias edit="vim"
-alias py2="/usr/bin/python"
-alias py3="/usr/bin/python3"
-alias feh="feh -Zg 800x500"
-alias ipy3="/usr/local/bin/ipython3"
-alias pip3="/usr/bin/python3 -m pip"
-alias :q="exit"
-alias :e="edit"
-alias :!="colonbang"
-alias mpv='mpv --vo opengl --opengl-es=yes --ytdl-format 18'
-alias howdoi='howdoi -ca'
-alias ytdl="youtube-dl -f 18"
-alias ytlf="youtube-dl -F"
-alias ffmpeg="ffmpeg -hide_banner"
-alias ccat="pygmentize -O 'style=friendly'"
-alias bfg="java -jar $HOME/.local/bin/bfg.jar"
+alias zshrc="vi ~/.zshrc";
+alias ls="ls --color";
+alias ll="ls -alFh";
+alias l="ls -ah";
+alias la="ls -a";
+alias ды="ls";
+alias edit="$EDITOR";
+alias py2="/usr/bin/python";
+alias py3="/usr/bin/python3";
+alias feh="feh -Zg 800x500";
+alias ipy3="/usr/local/bin/ipython3";
+alias pip3="/usr/bin/python3 -m pip";
+alias :q="exit";
+alias :e="edit";
+alias :!="colonbang";
+alias mpv='mpv --vo=opengl --opengl-es=yes --ytdl-format=18';
+alias howdoi='howdoi -ca';
+alias ytdl="youtube-dl -f 18";
+alias ytlf="youtube-dl -F";
+alias ffmpeg="ffmpeg -hide_banner";
+alias ffprobe="ffprobe -hide_banner";
+alias ffplay="ffplay -hide_banner";
+alias ccat="highlight";

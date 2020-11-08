@@ -3,7 +3,7 @@
 INTERVAL=2
 SHOW_PING="no";
 PING_HOST=1.1.1.1
-INTERFACES=(eth0 eth1 wlan0 usb0)
+INTERFACES=(enp3s0 wlp1s0)
 
 SCN="/sys/class/net";
 
@@ -29,35 +29,35 @@ get_bytes() {
 }
 
 humanize() {
-    sizes=("-B" "KB" "MB" "GB");
+    sizes=(" B" "KB" "MB" "GB");
     count=$(echo "$1 / 1" | bc);
-    if [[ "$count" -eq 0 ]]; then echo "    0 KB"; return; fi
+    if [[ "$count" -eq 0 ]]; then echo "   0_0  B"; return; fi
     i=$(echo $(calc "l($count) / l(1024)") / 1 | bc);
-    if [[ "$i" -eq 0 ]]; then i=1; fi
+    # if [[ "$i" -eq 0 ]]; then i=1; fi
     size="${sizes[$i]}";
-    scaled=$(printf "%5.1f" $(calc "$count / (1024 ^ $i)"));
+    scaled=$(printf "%6.1f" $(calc "$count / (1024 ^ $i)"));
     echo "$scaled ${size}";
 }
 
-ping_str="|%{F#faafaf}N/A ms%{F-}";
+ping_str="|N/A ms";
 [[ "$SHOW_PING" == "yes" ]] || ping_str="";
-echo "[%{F#78affa} WAIT KB/s%{F-}|%{F#fafaaf} FUCK KB/s%{F-}$ping_str]";
+echo "[  WAIT KB/s|  FUCK KB/s$ping_str]";
 read last_bytes_rx last_bytes_tx last_update_ts <<<"$(get_bytes)";
 while true; do
     if [[ "$SHOW_PING" == "yes" ]]; then
         if ! ping=$(ping -n -c 1 -W $INTERVAL $PING_HOST 2>/dev/null); then
-            rtt_str="%{F#faafaf}INF ms%{F-}";
+            rtt_str="INF ms%{F-}";
         else
             rtt=$(echo "$ping" \
                   | sed -rn 's/.*time=([0-9]{1,})\.?[0-9]{0,} ms.*/\1/p');
             if [ "$rtt" -lt 50 ]; then
-                color="%{F#affafa}";
+                color="";
             elif [ "$rtt" -lt 100 ]; then
-                color="%{F#affaaf}";
+                color="";
             elif [ "$rtt" -lt 150 ]; then
-                color="%{F#fafaaf}";
+                color="";
             else
-                color="%{F#faafaf}";
+                color="";
             fi;
             rtt_str=$(printf "%s%3d ms" $color $rtt);
         fi;
@@ -75,9 +75,9 @@ while true; do
     hrx="$(humanize $speed_rx)/s";
     htx="$(humanize $speed_tx)/s";
 
-    ping_str="|$rtt_str%{F-}";
+    ping_str="|$rtt_str";
     [[ "$SHOW_PING" == "yes" ]] || ping_str="";
-    echo "[%{F#78affa}$htx%{F-}|%{F#fafaaf}$hrx%{F-}$ping_str]"
+    echo "[$htx|$hrx$ping_str]";
 
     last_bytes_rx=$bytes_rx;
     last_bytes_tx=$bytes_tx;

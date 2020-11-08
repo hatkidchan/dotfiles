@@ -14,18 +14,20 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 HIST_STAMPS="yyyy-mm-dd"
 
 # duh
-plugins=(sudo git httpie python autopep8 screen extract cp virtualenv)
-[ -e "$ZSH_CUSTOM/extras/environ" ] && . "$ZSH_CUSTOM/extras/environ"
-[ -e "$ZSH_CUSTOM/extras/aliases" ] && . "$ZSH_CUSTOM/extras/aliases"
-[ -e "$ZSH_CUSTOM/extras/functions" ] && . "$ZSH_CUSTOM/extras/functions"
+plugins=(sudo git httpie python autopep8 screen extract cp virtualenv rust)
 
 source $ZSH/oh-my-zsh.sh
 export MANPATH="/usr/local/man:$MANPATH"
 export LANG=en_US.UTF-8
-export EDITOR='vi'
+export EDITOR='nvim'
 export ARCHFLAGS="-arch i686"
 export SSH_KEY_PATH="$HOME/.ssh/id_rsa"
 export PYTHONPATH="/usr/share"
+[ -e "$ZSH_CUSTOM/extras/environ" ] && . "$ZSH_CUSTOM/extras/environ"
+[ -e "$ZSH_CUSTOM/extras/aliases" ] && . "$ZSH_CUSTOM/extras/aliases"
+[ -e "$ZSH_CUSTOM/extras/functions" ] && . "$ZSH_CUSTOM/extras/functions"
+hl_path="/usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh";
+[ -e "$hl_path" ] && \
+    source "$hl_path";
+unset hl_path;
 
-[ -n "$XTERM_VERSION" ] && transset \
-    --id "$WINDOWID" --max 0.8 --min 0.8 >/dev/null;  # enable transparency

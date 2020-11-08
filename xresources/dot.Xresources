@@ -1,36 +1,12 @@
 #include ".config/xresources/urxvt.conf"
-#include ".config/xresources-colors/satori"
-
-! yeahconsole -------------------------------------
-
-yeahconsole.term:urxvt
-yeahconsole.restart:1
-yeahconsole.xOffset:0
-yeahconsole.screenWidth:1024
-yeahconsole.consoleHeight:30
-yeahconsole.aniDelay:50
-yeahconsole.stepSize:1
-yeahconsole.toggleKey:Win+F4
-yeahconsole.keySmaller:Control+n
-yeahconsole.keyBigger:Control+m
-yeahconsole.keyFull:Alt+F11
+#include ".config/xresources-colors/eyekeeper"
 
 ! FONTS
-
 Xft.antialias: 1
 Xft.hinting: 1
 Xft.hintstyle: hintslight
 Xft.rgba: greyscale
 Xft.lcdfilter: lcddefault
-
-! Rofi
-rofi.color-enabled:                  true
-!          STATE                        BG              FG          BGALT           HLBG        HLFG
-rofi.color-normal:                   argb:00000000,  #ddaadd , argb:00000000,  argb:4f4f4f4f,  #ccffff
-rofi.color-urgent:                   argb:00000000,  #ffaaaa , argb:00000000,  argb:4f4f4f4f,  #ff7878
-rofi.color-active:                   argb:00000000,  #eeffff , argb:00000000,  argb:4f4f4f4f,  #ccffff
-rofi.color-window:                   argb:ee151315,  argb:deadbeef, #3f3f26
-rofi.separator-style:                none
 
 ! Meet the spy
 st.termname:     rxvt-unicode-256color
@@ -63,6 +39,16 @@ XTerm.vt100.bellIsUrgent:       true
 XTerm.vt100.metaSendsEscape:    true
 XTerm.vt100.selectToClipboard:  true
 XTerm.font.linedrawing:         true
-! XTerm.termName:                 xterm-256color
-XTerm.termName:                 rxvt-unicode-256color
+XTerm.vt100.locale:		        false
+XTerm.vt100.utf8:		        true
+XTerm*font:                     -xos4-terminus-medium-r-normal--12-120-72-72-c-60-iso10646-1
+XTerm*font1:                    -xos4-terminus-medium-r-normal--12-120-72-72-c-60-iso10646-1
+
+XTerm*VT100.Translations: #override \
+    Shift <KeyPress> Insert: insert-selection(CLIPBOARD) \n\
+    Ctrl Shift <Key>V: insert-selection(CLIPBOARD) \n\
+    Ctrl Shift <Key>C: copy-selection(CLIPBOARD) \n\
+    Ctrl <Btn1Up>: exec-formatted("xdg-open '%t'", PRIMARY)
+
+XTerm.termName:                 xterm-256color
 ! XTerm.vt100.font: 10x20

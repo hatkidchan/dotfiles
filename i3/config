@@ -1,14 +1,10 @@
 # i3 config file (v4)
-# 
-# Colors based on http://dotshare.it/dots/8270/
-# Other stuff by me or default
-#
-font Fira Code
+font pango:Liberation Mono 8
 
 # Lmao
 set $mod Mod4
 set $Locker "/bin/bash ~/.config/i3/locker.sh"
-set $terminal xst
+set $terminal xterm
 
 
 set $left h
@@ -21,7 +17,7 @@ floating_modifier Mod4
 # Basics
 bindsym $mod+Return exec $terminal
 bindsym $mod+F4 kill
-bindsym $mod+d exec --no-startup-id rofi -show drun
+bindsym $mod+d exec --no-startup-id dmenu_run
 
 # Focusing
 bindsym $mod+$left focus left
@@ -55,8 +51,9 @@ bindsym $mod+v split v
 bindsym $mod+f fullscreen toggle
 
 # Layout
-bindsym $mod+t border normal
+bindsym $mod+t border normal 1
 bindsym $mod+y border pixel
+bindsym $mod+u border none
 
 bindsym $mod+s layout stacking
 bindsym $mod+w layout tabbed
@@ -162,7 +159,7 @@ mode "resize" {
         bindsym Shift+$down resize shrink height 1 px or 1 ppt
         bindsym Shift+$up resize grow height 1 px or 1 ppt
         bindsym Shift+$left resize shrink width 1 px or 1 ppt
-        bindsym $right resize grow width 1 px or 1 ppt
+        bindsym Shift+$right resize grow width 1 px or 1 ppt
 
         bindsym Shift+Left resize shrink width 1 px or 1 ppt
         bindsym Shift+Down resize grow height 1 px or 1 ppt
@@ -194,30 +191,14 @@ mode "$mode_system" {
 bindsym $mod+Delete mode "$mode_system"
 
 # Colors
-set $bg-color #2F343F
-set $inactive-bg-color #2F343F
-set $text-color #F3F4F5
-set $inactive-text-color #676E7D
-set $urgent-bg-color #E53935
-set $bg-color2 #262626
-set $inactive-bg-color2 #262626
-set $text-color2 #D5C4A1
-set $inactive-text-color2 #4E4E4E
-set $urgent-bg-color2 	#E53935
-# set $bg-color3 #A800FF
-set $bg-color3 #005252
-set $border #F3F4F5
-set $nav_color #524A42
-set $ind_color #7D715C
+# Class                 border  bckgrnd text    indic-r bd_chld
+client.focused          #131313 #131313 #cccccc #565656 #131313
+client.unfocused        #131313 #131313 #777777 #565656 #131313
+client.focused_inactive #131313 #131313 #777777 #565656 #131313
+client.urgent           #131313 #131313 #ffaaaa #ffaaaa #131313
+client.background       #131313
 
-# Class                      border  backgr   text  indicator child_border
-client.focused		$bg-color2 $bg-color2 $text-color2 $ind_color
-client.unfocused	$nav_color $nav_color $inactive-bg-color2 $ind_color
-client.focused_inactive	$nav_color $nav_color $inactive-bg-color2 $ind_color
-client.urgent	 $urgent-bg-color2 $urgent-bg-color2 $text-color2 $ind_color
-client.background           #111111
-
-#Gaps
+# Gaps
 set $gaps_default_inner 25
 set $gaps_default_outer 15
 
@@ -227,9 +208,11 @@ gaps outer $gaps_default_outer
 bindsym $mod+Shift+i gaps inner current toggle $gaps_default_inner
 bindsym $mod+Shift+o gaps outer current toggle $gaps_default_outer
 
+default_border normal 1
+default_floating_border pixel 1
+
 # Windows settings
-for_window [class="Chromium"] border pixel 0
-for_window [class="Eog"] floating enable
+for_window [class="Chromium"] border none
 for_window [class="fontforge"] floating enable
 for_window [class="flameshot"] floating enable
 for_window [class="Display-im6.q16"] floating enable
@@ -240,10 +223,9 @@ for_window [class="qpaeq"] floating enable
 for_window [class="Nitrogen"] floating enable
 
 # Media
-set $truemute sset Master mute
-set $mute amixer sset Master toggle
-set $vol_inc amixer sset Master 2%+
-set $vol_dec amixer sset Master 2%-
+set $mute pamixer -t
+set $vol_inc pamixer -i 2
+set $vol_dec pamixer -d 2
 set $music_player ncmpc
 set $music_stop mpc stop
 set $music_pause mpc toggle
@@ -271,9 +253,9 @@ bindsym XF86AudioPlay exec --no-startup-id $music_pause
 bindsym $mod+m exec --no-startup-id $terminal -e $music_player
 
 # Screenshot
-bindsym Mod4+Print exec ~/.local/bin/scr
-bindsym Shift+Print exec ~/.local/bin/scr -s
-bindsym Mod1+Print exec ~/.local/bin/scr -u
+bindsym $mod+p exec ~/.local/bin/scr
+bindsym $mod+Shift+p exec ~/.local/bin/scr -s
+bindsym $mod+Mod1+p exec ~/.local/bin/fscr
 bindsym Print exec flameshot gui
 
 # Autostart
@@ -281,5 +263,8 @@ exec_always --no-startup-id ~/.config/i3/autostart.sh
 
 # Other stuff
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
-bindsym $mod+Shift+c reload
+bindsym $mod+Shift+c reload; exec --no-startup-id ~/.config/i3/polybar.sh
 bindsym $mod+F1 exec --no-startup-id ~/.local/bin/toggletouchpad
+bindsym --release $mod+F2 exec --no-startup-id transset-df
+bindsym $mod+F3 exec i3-input -F 'workspace "%s"' -P 'Go to:'
+bindsym $mod+Mod1+F3 exec i3-input -F 'move container to workspace "%s"' -P 'Move to:'

@@ -1,0 +1,47 @@
+#!/bin/sh
+CSI=`printf "\x1b["`;
+
+defaultcolor_nocode() {
+    for((i=40;i<48;i++)); do printf "%s%dm       %s0m" "$CSI" "$i" "$CSI"; done
+}
+defaultcolor_code() {
+    for((i=40;i<48;i++)); do printf "%s%dm%s97m  %3d  %s0m" $CSI $i $CSI $i $CSI; done
+}
+brightcolor_nocode() {
+    for((i=100;i<108;i++)); do printf "%s%dm       %s0m" "$CSI" "$i" "$CSI"; done
+}
+brightcolor_code() {
+    for((i=100;i<108;i++)); do printf "%s%dm%s30m  %3d  %s0m" $CSI $i $CSI $i $CSI; done
+}
+
+echo "${CSI}40m Default 16 colors                                               ${CSI}0m";
+echo -n "${CSI}40m ${CSI}47;30m       "; defaultcolor_nocode; echo "${CSI}40m ${CSI}0m";
+echo -n "${CSI}40m ${CSI}47;30m  NRM  "; defaultcolor_code; echo "${CSI}40m ${CSI}0m";
+echo -n "${CSI}40m ${CSI}47;30m       "; defaultcolor_nocode; echo "${CSI}40m ${CSI}0m";
+echo -n "${CSI}40m ${CSI}107;30m       "; brightcolor_nocode; echo "${CSI}40m ${CSI}0m";
+echo -n "${CSI}40m ${CSI}107;30m  BRI  "; brightcolor_code; echo "${CSI}40m ${CSI}0m";
+echo -n "${CSI}40m ${CSI}107;30m       "; brightcolor_nocode; echo "${CSI}40m ${CSI}0m";
+
+if [ "x$1" = "xall" ]; then
+    echo "${CSI}40m 256 colors                                                      ${CSI}0m";
+    echo -n "${CSI}40m        ";
+    for((i=0;i<16;i++)); do
+        printf "%s48;5;%dm\u2500\u2500\u2500" $CSI $i;
+    done;
+    echo "${CSI}40m         ";
+    for((y=0;y<24;y++)); do
+        echo -n "${CSI}40m ";
+        for((x=0;x<9;x++)); do
+            i=$(($y * 9 + $x + 16));
+            j=$((16 + (216 - $y * 9 - $x)));
+            printf "%s48;5;%dm%s38;5;%dm  %3d  " $CSI $i $CSI $j $i;
+        done;
+        echo "${CSI}40m ${CSI}0m";
+    done;
+    echo -n "${CSI}40m        ";
+    for((i=232;i<256;i++)); do
+        printf "%s48;5;%dm\u2500\u2500" $CSI $i;
+    done;
+    echo "${CSI}40m         ${CSI}0m";
+fi;
+echo "${CSI}40m                                                                 ${CSI}0m";

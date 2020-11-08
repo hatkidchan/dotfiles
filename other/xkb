@@ -1,0 +1,52 @@
+xkb_keymap {
+	xkb_keycodes  {
+		include "evdev+aliases(qwerty)"
+	};
+	xkb_types     {
+		include "complete"
+		type "PC_SUPER_LEVEL3" {
+			modifiers = Shift+Mod4;
+			map[None] = Level1;
+			map[Shift] = Level2;
+			map[Mod4] = Level3;
+			map[Shift+Mod4] = Level4;
+			level_name[Level1] = "Base";
+			level_name[Level2] = "Shift";
+			level_name[Level3] = "Super Base";
+			level_name[Level4] = "Shift Super";
+		};
+		type "PC_SUPER_LEVEL3_ALPHABETIC" {
+			modifiers = Shift+Lock+Mod4;
+			map[None] = Level1;
+			map[Shift] = Level2;
+			map[Mod4] = Level3;
+			map[Shift+Mod4] = Level4;
+
+			map[Lock] = Level2;
+			map[Shift+Lock] = Level1;
+			map[Lock+Mod4] = Level3;
+			map[Shift+Lock+Mod4] = Level4;
+			level_name[Level1] = "Base";
+			level_name[Level2] = "Caps";
+			level_name[Level3] = "Super Base";
+			level_name[Level4] = "Shift Super";
+		};
+	};
+	xkb_compat    {
+		include "complete+ledscroll(group_lock)"
+	};
+	xkb_symbols "my" {
+		include "pc+us+ru:2+inet(evdev)+group(alt_shift_toggle)"
+		key <AD11> {
+			type[Group1] = "PC_SUPER_LEVEL3",
+			type[Group2] = "PC_SUPER_LEVEL3_ALPHABETIC",
+			actions[Group1] = [ NoAction(), NoAction(),
+			            RedirectKey(keycode=<ESC>, clearmodifiers=Mod4),
+			            RedirectKey(keycode=<ESC>, clearmodifiers=Mod4) ],
+			actions[Group2] = [ NoAction(), NoAction(),
+			            RedirectKey(keycode=<ESC>, clearmodifiers=Mod4),
+			            RedirectKey(keycode=<ESC>, clearmodifiers=Mod4) ]
+		};
+	};
+	xkb_geometry  { include "pc(pc105)"	};
+};

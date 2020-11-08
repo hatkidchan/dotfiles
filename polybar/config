@@ -17,11 +17,11 @@
 ;==========================================================
 
 [colors]
-background = #aa000000
+background = #ff131313
 background-alt = #444
-foreground = #dfdfdf
+foreground = #999999
 foreground-alt = #555
-primary = #ffb52a
+primary = #ffffff
 secondary = #e60053
 alert = #bd2c40
 
@@ -35,7 +35,8 @@ background = ${colors.background}
 foreground = ${colors.foreground}
 separator = " "
 font-0 = siji:pixelsize=10
-font-1 = UbuntuMono Nerd Font:pixelsize=10
+font-1 = Terminus (TTF):pixelsize=10
+font-2 = UbuntuMono Nerd Font:pixelsize=10
 
 cursor-click = pointer
 cursor-scroll = ns-resize
@@ -44,7 +45,7 @@ cursor-scroll = ns-resize
 [bar/tray]
 inherit = bar/default
 modules-left = date workspace
-modules-right = btn-screenshot kbd-layout brightness volume
+modules-right = kbd-speed kbd-layout brightness volume
 tray-position = right
 tray-detached = false
 tray-padding = 3
@@ -55,7 +56,7 @@ bottom = true
 
 [bar/main]
 inherit = bar/default
-modules-left = memory cpu battery temperature rootfs
+modules-left = memory cpu battery temperature rootfs mntdata
 modules-center = 
 modules-right = net-wlan0 net-eth0 net-eth1 net-usb0 net-all
 
@@ -63,8 +64,8 @@ modules-right = net-wlan0 net-eth0 net-eth1 net-usb0 net-all
 [module/date]
 type = internal/date
 interval = 1.0
-date = %Y-%m-%d%
-time = %H:%M:%S
+date = %a %d
+time = %r
 label = %date% %time%
 
 
@@ -75,14 +76,12 @@ label = %date% %time%
 type = internal/memory
 interval = 1
 format-prefix = " "
-format-foreground = #fea
 label = %percentage_used:3%%
 
 [module/cpu]
 type = internal/cpu
 interval = 1
 format-prefix = " "
-format-foreground = #eaf
 label = %percentage:3%%
 
 [module/rootfs]
@@ -90,9 +89,12 @@ type = internal/fs
 interval = 30
 mount-0 = /
 format-mounted-prefix = " "
-format-mounted-foreground = #afa
 format-mounted = <label-mounted>
-label-mounted = %percentage_used:3%%
+label-mounted = %percentage_used:2%%
+
+[module/mntdata]
+inherit = module/rootfs
+mount-0 = /mnt/data
 
 [module/temperature]
 type = internal/temperature
@@ -101,7 +103,6 @@ base-temperature = 40
 warn-temperature = 60
 format = <ramp> <label>
 format-warn = <ramp> <label-warn>
-format-foreground = #ffa
 format-warn-foreground = #faa
 label = "%temperature-c:3%"
 label-warn = %temperature-c:3%
@@ -119,8 +120,6 @@ full-at = 90
 format-charging = <animation-charging> <label-charging>
 format-discharging = <ramp-capacity> <label-discharging>
 format-full = "<label-full>"
-format-charging-foreground = #aff
-format-discharging-foreground = #ffa
 label-full = ""
 ramp-capacity-0 = 
 ramp-capacity-1 = 
@@ -147,7 +146,7 @@ animation-charging-framerate = 400
 [module/net-base]
 type = internal/network
 interval = 1
-label-connected = "%{F#af78fa}%local_ip%%{F-}%%{F#7878fa}%ifname%%{F-}"
+label-connected = "%local_ip%@%ifname%"
 format-connected = "[<label-connected>]"
 format-disconnected = 
 
@@ -158,13 +157,13 @@ tail = true
 
 [module/net-wlan0]
 inherit = module/net-base
-label-connected = "%essid%%{F-}|%{F#af78fa}%local_ip%%{F-}"
-format-connected = "[%{F#78fafa}直 <label-connected>]"
-interface = wlan0
+label-connected = "%essid%|%local_ip%"
+format-connected = "[<label-connected>]"
+interface = wlp1s0
 
 [module/net-eth0]
 inherit = module/net-base
-interface = eth0
+interface = enp3s0
 
 [module/net-eth1]
 inherit = module/net-base
@@ -181,32 +180,14 @@ unknown-as-up = true
 ;==================================================
 [module/volume]
 type = internal/alsa
-; OLD
-;format-volume = "[<ramp-volume> ][<bar-volume>]"
-;format-muted = "[ ][<bar-volume>]"
-format-volume = "[<ramp-volume> ][<label-volume>]"
-format-muted = "[ ][<label-muted>]"
+format-volume = "[<ramp-volume>][<label-volume>]"
+format-muted = "[x][<label-muted>]"
 label-volume = "%percentage:3%%"
-label-volume-foreground = ${root.foreground}
-label-muted = "%percentage:03%%"
-label-muted-foreground = "#755"
-bar-volume-width = 10
-bar-volume-foreground-0 = #5555aa
-bar-volume-foreground-1 = #55aa55
-bar-volume-foreground-2 = #f5a70a
-bar-volume-foreground-3 = #ff5555
-bar-volume-gradient = false
-bar-volume-indicator = |
-bar-volume-fill = ─
-bar-volume-empty = " "
-ramp-volume-0 = 奄
-ramp-volume-0-foreground = #5555aa
-ramp-volume-1 = 奔
-ramp-volume-1-foreground = #55aa55
-ramp-volume-2 = 奔
-ramp-volume-2-foreground = #f5a70a
-ramp-volume-3 = 墳
-ramp-volume-3-foreground = #ff5555
+label-muted = "%percentage:3%%"
+ramp-volume-0 = s
+ramp-volume-1 = l
+ramp-volume-2 = m
+ramp-volume-3 = H
 
 [module/workspace]
 type = internal/i3
@@ -218,35 +199,24 @@ blacklist-0 = num lock
 blacklist-1 = scroll lock
 format = [<label-layout>|<label-indicator>]
 label-layout = %layout%
-label-indicator-on-capslock = "%{F#2affb5}C%{F-}"
-label-indicator-off-capslock = "%{F#e60053}c%{F-}"
-label-indicator-on-numlock = "%{F#2affb5}N%{F-}"
-label-indicator-off-numlock = "%{F#e60053}n%{F-}"
-label-indicator-on-scrolllock = "%{F#2affb5}S%{F-}"
-label-indicator-off-scrolllock = "%{F#e60053}s%{F-}"
+label-indicator-on-capslock = "%{F#77ff77}C%{F-}"
+label-indicator-off-capslock = "c"
+
+[module/kbd-speed]
+type = custom/script
+exec = ~/.config/polybar/info-typespeed.sh
+tail = true
 
 [module/brightness]
 type = internal/xbacklight
 output = ${env:MONITOR:LVDS1}
 enable-scroll = true
-format = "[<ramp> ]"
-ramp-0 = "望"
-ramp-0-foreground = "#777777"
-ramp-1 = "滋"
-ramp-1-foreground = "#aaaa77"
-ramp-2 = "滛"
-ramp-2-foreground = "#ffaa55"
-ramp-3 = "盛"
-ramp-3-foreground = "#ffff55"
-ramp-4 = "盛"
-ramp-4-foreground = "#aaffff"
-
-
-[module/btn-screenshot]
-type = custom/text
-content = "[S]"
-click-left = "sleep 0.5; bash -e /home/user/.local/bin/scr -s"
-click-right = "flameshot gui"
+format = "[<ramp>]"
+ramp-0 = "d"
+ramp-1 = "l"
+ramp-2 = "m"
+ramp-3 = "B"
+ramp-4 = "F"
 
 
 [settings]

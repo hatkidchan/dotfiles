@@ -32,12 +32,12 @@ declare -A install_entries=(
     [ncmpc]=yes
     [polybar]=yes
     [dunst]=yes
-    [rofi]=yes
     [nvim]=yes
     [xresources]=yes
     [zsh]=yes,
     [tmux]=yes,
     [mpd]=no,
+    [xkb]=yes,
 );
 
 
@@ -181,12 +181,6 @@ if [[ "${install_entries[dunst]}" == "yes" ]]; then
     cp -r "$self/dunst/." "$config/dunst/.";
 fi;
 
-if [[ "${install_entries[rofi]}" == "yes" ]]; then
-    echo -e "\e[32m[*] Installing rofi config\e[0m";
-    [ -d "$config/rofi" ] || mkdir -p "$config/rofi";
-    cp -r "$self/rofi/." "$config/rofi/.";
-fi;
-
 if [[ "${install_entries[nvim]}" == "yes" ]]; then
     echo -e "\e[32m[*] Installing nvim config\e[0m";
     [ -d "$config/nvim" ] || mkdir -p "$config/nvim";
@@ -201,6 +195,12 @@ if [[ "${install_entries[xresources]}" == "yes" ]]; then
     cp -r "$self/xresources/xresources/." "$config/xresources/.";
     [ -d "$config/xresources-colors" ] || mkdir -p "$config/xresources-colors";
     cp -r "$self/xresources/xresources-colors/." "$config/xresources-colors/.";
+fi;
+
+
+if [[ "${install_entries[zsh]}" == "yes" ]]; then
+    echo -e "\e[32m[*] Installing keyboard mapping\e[0m";
+    cp "$self/other/xkb" "$share/xkb.conf";
 fi;
 
 if [[ "${install_entries[zsh]}" == "yes" ]]; then

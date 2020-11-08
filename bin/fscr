@@ -1,0 +1,29 @@
+#!/bin/sh
+
+name=$(date +"scrot_%Y.%m.%d_%H.%M.%S.png");
+out_path=$HOME/images/shots/$name;
+
+info=`xwininfo`;
+
+width=`echo $info | grep -oP 'Width: \d+' | grep -oP '\d+'`
+height=`echo $info | grep -oP 'Height: \d+' | grep -oP '\d+'`
+abs_x=`echo $info | grep -oP 'Absolute upper-left X:\s+\d+' | grep -oP '\d+'`
+abs_y=`echo $info | grep -oP 'Absolute upper-left Y:\s+\d+' | grep -oP '\d+'`
+
+echo "Position: ${width}x${height}+${abs_x}+${abs_y}";
+
+abs_x=$(($abs_x - 40));
+abs_y=$(($abs_y - 40));
+width=$(($width + 80));
+height=$(($height + 80));
+
+echo "New position: ${width}x${height}+${abs_x}+${abs_y}";
+
+scrot -b -a "${abs_x},${abs_y},${width},${height}" "$name" || exit;
+
+mv "$name" "$out_path";
+
+xclip -selection clipboard -t 'image/png' < "$out_path";
+
+notify-send -a "scrot" "Saved screenshot" "${out_path}";
+
